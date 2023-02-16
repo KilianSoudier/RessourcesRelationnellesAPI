@@ -1,5 +1,6 @@
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using RessourcesRelationnellesAPI.Models;
+using RessourcesRelationnellesAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,5 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.MapUtilisateursEndpoints();
 
 app.Run();
