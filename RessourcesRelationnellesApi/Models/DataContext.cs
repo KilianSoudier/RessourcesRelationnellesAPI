@@ -16,10 +16,10 @@ public partial class DataContext : DbContext
     public virtual DbSet<Partager> Partager { get; set; }
     public virtual DbSet<Relation_Utilisateurs> Relation_Utilisateurs { get; set; }
     public virtual DbSet<Ressources> Ressources { get; set; }
-    public virtual DbSet<Texte> Textes{ get; set; }
-    public virtual DbSet<Trier_Ressources_Categories> Trier_Ressources_Categories{ get; set; }
-    public virtual DbSet<Type_Relation> Type_Relations{ get; set; }
-    public virtual DbSet<Type_Utilisateurs> Type_Utilisateurs{ get; set; }
+    public virtual DbSet<Texte> Textes { get; set; }
+    public virtual DbSet<Trier_Ressources_Categories> Trier_Ressources_Categories { get; set; }
+    public virtual DbSet<Type_Relation> Type_Relations { get; set; }
+    public virtual DbSet<Type_Utilisateurs> Type_Utilisateurs { get; set; }
     public virtual DbSet<Video> Videos { get; set; }
 
 

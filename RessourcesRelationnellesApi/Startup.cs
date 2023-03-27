@@ -16,12 +16,9 @@ namespace RessourcesRelationnellesAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>((provider, options) => {
-                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConn")));
-                IConfiguration config = provider.GetRequiredService<IConfiguration>();
-                string connectionString = config.GetConnectionString("DefaultConn");
-                options.UseSqlServer(connectionString);
-            });
+            //services.AddDbContext<RessourcesRelationnellesAPI.Models.DataContext>();
+            services.AddDbContext<RessourcesRelationnellesAPI.Models.DataContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }
