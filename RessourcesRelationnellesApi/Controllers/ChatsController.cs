@@ -1,67 +1,67 @@
-﻿using system;
-using system.collections.generic;
-using system.linq;
-using system.threading.tasks;
-using microsoft.aspnetcore.http;
-using microsoft.aspnetcore.mvc;
-using microsoft.entityframeworkcore;
-using ressourcesrelationnellesapi.models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RessourcesRelationnellesAPI.Models;
 
-namespace ressourcesrelationnellesapi.controllers
+namespace RessourcesRelationnellesAPI.Controllers
 {
-    [route("api/[controller]")]
-    [apicontroller]
-    public class chatscontroller : controllerbase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ChatsController : ControllerBase
     {
-        private readonly datacontext _context;
+        private readonly DataContext _context;
 
-        public chatscontroller(datacontext context)
+        public ChatsController(DataContext context)
         {
             _context = context;
         }
 
-        // get: api/chats
-        [httpget]
-        public async task<actionresult<ienumerable<chat>>> getchats()
+        // GET: api/Chats
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Chat>>> GetChats()
         {
-            return await _context.chats.tolistasync();
+            return await _context.Chats.ToListAsync();
         }
 
-        // get: api/chats/5
-        [httpget("{id}")]
-        public async task<actionresult<chat>> getchat(uint id)
+        // GET: api/Chats/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Chat>> GetChat(uint id)
         {
-            var chat = await _context.chats.findasync(id);
+            var chat = await _context.Chats.FindAsync(id);
 
             if (chat == null)
             {
-                return notfound();
+                return NotFound();
             }
 
             return chat;
         }
 
-        // put: api/chats/5
-        // to protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [httpput("{id}")]
-        public async task<iactionresult> putchat(uint id, chat chat)
+        // PUT: api/Chats/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutChat(uint id, Chat chat)
         {
             if (id != chat.id_chat)
             {
-                return badrequest();
+                return BadRequest();
             }
 
-            _context.entry(chat).state = entitystate.modified;
+            _context.Entry(chat).State = EntityState.Modified;
 
             try
             {
-                await _context.savechangesasync();
+                await _context.SaveChangesAsync();
             }
-            catch (dbupdateconcurrencyexception)
+            catch (DbUpdateConcurrencyException)
             {
-                if (!chatexists(id))
+                if (!ChatExists(id))
                 {
-                    return notfound();
+                    return NotFound();
                 }
                 else
                 {
@@ -69,39 +69,39 @@ namespace ressourcesrelationnellesapi.controllers
                 }
             }
 
-            return nocontent();
+            return NoContent();
         }
 
-        // post: api/chats
-        // to protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [httppost]
-        public async task<actionresult<chat>> postchat(chat chat)
+        // POST: api/Chats
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Chat>> PostChat(Chat chat)
         {
-            _context.chats.add(chat);
-            await _context.savechangesasync();
+            _context.Chats.Add(chat);
+            await _context.SaveChangesAsync();
 
-            return createdataction("getchat", new { id = chat.id_chat }, chat);
+            return CreatedAtAction("GetChat", new { id = chat.id_chat }, chat);
         }
 
-        // delete: api/chats/5
-        [httpdelete("{id}")]
-        public async task<iactionresult> deletechat(uint id)
+        // DELETE: api/Chats/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteChat(uint id)
         {
-            var chat = await _context.chats.findasync(id);
+            var chat = await _context.Chats.FindAsync(id);
             if (chat == null)
             {
-                return notfound();
+                return NotFound();
             }
 
-            _context.chats.remove(chat);
-            await _context.savechangesasync();
+            _context.Chats.Remove(chat);
+            await _context.SaveChangesAsync();
 
-            return nocontent();
+            return NoContent();
         }
 
-        private bool chatexists(uint id)
+        private bool ChatExists(uint id)
         {
-            return _context.chats.any(e => e.id_chat == id);
+            return _context.Chats.Any(e => e.id_chat == id);
         }
     }
 }
