@@ -14,7 +14,15 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddJsonFile("appsettings.json",false,false))
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer("Server=localhost;Database=RessourcesRelationnelles;TrustServerCertificate=True;Encrypt=False;persist security info=True;Trusted_Connection=True;"));
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 var app = builder.Build();
+app.UseCors();
 //builder.Services.AddDbContext<DataContext>(options =>
 //{
 //option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
