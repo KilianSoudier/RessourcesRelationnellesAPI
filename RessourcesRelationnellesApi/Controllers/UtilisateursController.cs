@@ -41,10 +41,24 @@ namespace RessourcesRelationnellesAPI.Controllers
             return utilisateurs;
         }
 
-        // PUT: api/Utilisateurs/5
+        // GET: /api/Utilisateurs/a@mail.com, aa
+        [HttpGet("{mail}, {mdp}")]
+        public async Task<ActionResult<Utilisateurs>> GetUtilisateurs(string mail, string mdp)
+        {
+            var utilisateurs = await _context.Utilisateurs.FirstOrDefaultAsync(s=>s.email==mail && s.mdp==mdp);
+
+            if (utilisateurs == null)
+            {
+                return NotFound();
+            }
+
+            return utilisateurs;
+        }
+
+        // PATCH: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUtilisateurs(uint id, Utilisateurs utilisateurs)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUtilisateurs(uint id, Utilisateurs utilisateurs)
         {
             if (id != utilisateurs.id_user)
             {
