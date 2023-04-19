@@ -26,6 +26,15 @@ namespace RessourcesRelationnellesAPI.Controllers
         {
             return await _context.Utilisateurs.ToListAsync();
         }
+        // GET: api/Utilisateurs/modo
+        [HttpGet("modo")]
+        public async Task<ActionResult<IEnumerable<Utilisateurs>>> GetModo()
+        {
+            Type_Utilisateurs modo = new Type_Utilisateurs();
+            modo.id_type_user = 3;
+            modo.nom = "moderateur";
+            return await _context.Utilisateurs.Where(s => s.Type_Utilisateur == modo).ToListAsync();
+        }
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
